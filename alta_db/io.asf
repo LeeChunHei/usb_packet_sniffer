@@ -1,0 +1,54 @@
+set_location_assignment -to ULPI_CLK PIN_13
+set_location_assignment -to ULPI_D[7] PIN_1
+set_location_assignment -to ULPI_D[6] PIN_2
+set_location_assignment -to ULPI_D[5] PIN_3
+set_location_assignment -to ULPI_D[4] PIN_4
+set_location_assignment -to ULPI_D[3] PIN_5
+set_location_assignment -to ULPI_D[2] PIN_6
+set_location_assignment -to ULPI_D[1] PIN_9
+set_location_assignment -to ULPI_D[0] PIN_11
+set_location_assignment -to ULPI_DIR PIN_14
+set_location_assignment -to ULPI_NXT PIN_12
+set_location_assignment -to ULPI_STP PIN_15
+set_location_assignment -to ULPI_RST PIN_16
+set_location_assignment -to HSPI_CLK PIN_44
+set_location_assignment -to HSPI_HTREQ PIN_43
+set_location_assignment -to HSPI_HTRDY PIN_45
+set_location_assignment -to HSPI_HTVLD PIN_42
+set_location_assignment -to HSPI_D[7] PIN_18
+set_location_assignment -to HSPI_D[6] PIN_19
+set_location_assignment -to HSPI_D[5] PIN_20
+set_location_assignment -to HSPI_D[4] PIN_22
+set_location_assignment -to HSPI_D[3] PIN_23
+set_location_assignment -to HSPI_D[2] PIN_46
+set_location_assignment -to HSPI_D[1] PIN_25
+set_location_assignment -to HSPI_D[0] PIN_41
+set_location_assignment -to SPI_SCK PIN_48
+set_location_assignment -to SPI_MISO PIN_17
+set_instance_assignment -name IO_STANDARD -to ULPI_CLK "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[7] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[6] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[5] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[4] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[3] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[2] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[1] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_D[0] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_DIR "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_NXT "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_STP "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to ULPI_RST "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_CLK "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_HTREQ "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_HTRDY "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_HTVLD "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[7] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[6] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[5] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[4] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[3] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[2] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[1] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to HSPI_D[0] "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to SPI_SCK "3.3-V LVTTL"
+set_instance_assignment -name IO_STANDARD -to SPI_MISO "3.3-V LVTTL"

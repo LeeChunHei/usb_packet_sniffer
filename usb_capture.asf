@@ -1,0 +1,42 @@
+set_location_assignment PIN_13 -to ULPI_CLK
+set_location_assignment PIN_11 -to ULPI_D[0]
+set_location_assignment PIN_9  -to ULPI_D[1]
+set_location_assignment PIN_6  -to ULPI_D[2]
+set_location_assignment PIN_5  -to ULPI_D[3]
+set_location_assignment PIN_4  -to ULPI_D[4]
+set_location_assignment PIN_3  -to ULPI_D[5]
+set_location_assignment PIN_2  -to ULPI_D[6]
+set_location_assignment PIN_1  -to ULPI_D[7]
+set_location_assignment PIN_14 -to ULPI_DIR
+set_location_assignment PIN_12 -to ULPI_NXT
+set_location_assignment PIN_15 -to ULPI_STP
+set_location_assignment PIN_16 -to ULPI_RST
+
+set_location_assignment PIN_44 -to HSPI_CLK
+set_location_assignment PIN_43 -to HSPI_HTREQ
+set_location_assignment PIN_45 -to HSPI_HTRDY
+set_location_assignment PIN_42 -to HSPI_HTVLD
+set_location_assignment PIN_41 -to HSPI_D[0]
+set_location_assignment PIN_25 -to HSPI_D[1]
+set_location_assignment PIN_46 -to HSPI_D[2]
+set_location_assignment PIN_23 -to HSPI_D[3]
+set_location_assignment PIN_22 -to HSPI_D[4]
+set_location_assignment PIN_20 -to HSPI_D[5]
+set_location_assignment PIN_19 -to HSPI_D[6]
+set_location_assignment PIN_18 -to HSPI_D[7]
+
+set_location_assignment PIN_48 -to SPI_SCK
+set_location_assignment PIN_17 -to SPI_MISO
+
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_HTREQ
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_HTVLD
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[7]

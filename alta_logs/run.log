@@ -1,0 +1,620 @@
+> alta::tcl_whisper "Cmd : [alta::prog_path] [alta::prog_version]([alta::prog_subversion])\n"
+Cmd : D:/Download/Supra/bin/af.exe 2023.09.b0(aabe64d9)
+> alta::tcl_whisper "Args : [string map {\{ \" \} \"} $tcl_cmd_args]\n"
+Args : -X "set QUARTUS_SDC true" -X "set FITTING timing_more" -X "set FITTER hybrid" -X "set EFFORT highest" -X "set HOLDX default" -X "set SKEW   basic" -X "set MODE QUARTUS" -X "set FLOW ALL" -F ./af_run.tcl
+> 
+> set_seed_rand $SEED
+> set ar_timing_derate ${TIMING_DERATE}
+> 
+> date_time
+Mon Oct 09 23:21:42 2023
+> if { [file exists "./${DESIGN}.pre.asf"] } {
+  alta::tcl_highlight "Using pre-ASF file ${DESIGN}.pre.asf.\n"
+  source "./${DESIGN}.pre.asf"
+}
+Using pre-ASF file usb_capture.pre.asf.
+> 
+> set LOAD_DB    false
+> set LOAD_PLACE false
+> set LOAD_ROUTE false
+> if { $FLOW == "LOAD" || $FLOW == "CHECK" || $FLOW == "PROBE" } {
+  set LOAD_DB    true
+  set LOAD_PLACE true
+  set LOAD_ROUTE true
+} elseif { $FLOW == "R" || $FLOW == "ROUTE" } {
+  set LOAD_DB    true
+  set LOAD_PLACE true
+}
+> 
+> set ORIGINAL_QSF ""
+> set ORIGINAL_PIN ""
+> 
+> #################################################################################
+> 
+> while (1) {
+if { [info exists CORNER] } { set_mode -corner $CORNER; }
+
+eval "load_architect ${no_route} -type ${DEVICE} 1 1 1000 1000"
+foreach ip_file $IP_FILES { read_ip $ip_file; }
+
+
+if { $FLOW == "GEN" } {
+  if { ! [info exists CONFIG_BITS] } {
+    set CONFIG_BITS "${RESULT_DIR}/${DESIGN}.bin"
+  }
+  if { [llength $CONFIG_BITS] > 1 } {
+    if { ! [info exists BOOT_BINARY] } {
+      set BOOT_BINARY "${RESULT_DIR}/${DESIGN}_boot.bin"
+    }
+    if { ! [info exists CONFIG_ADDRESSES] } {
+      set CONFIG_ADDRESSES ""
+    }
+    generate_binary -master $BOOT_BINARY -inputs $CONFIG_BITS -address $CONFIG_ADDRESSES
+  } else {
+    set CONFIG_ROOT   [file rootname [lindex $CONFIG_BITS 0]]
+    set SLAVE_RBF     "${CONFIG_ROOT}_slave.rbf"
+    set MASTER_BINARY "${CONFIG_ROOT}_master.bin"
+    if { [file exists [lindex $CONFIG_BITS 0]] } {
+      generate_binary -slave  $SLAVE_RBF     -inputs [lindex $CONFIG_BITS 0] -reverse
+      generate_binary -master $MASTER_BINARY -inputs [lindex $CONFIG_BITS 0]
+    }
+    if { ! [info exists BOOT_BINARY] } {
+      set BOOT_BINARY $MASTER_BINARY
+    }
+  }
+  set PRG_FILE [file rootname $BOOT_BINARY].prg
+  set AS_FILE  [file rootname $BOOT_BINARY]_as.prg
+  generate_programming_file $BOOT_BINARY -erase $ERASE \
+                            -program $PROGRAM -verify $VERIFY -offset $OFFSET \
+                            -prg $PRG_FILE -as $AS_FILE
+  break
+}
+
+if { $LOAD_DB } {
+  load_db -top ${TOP_MODULE}
+  set sdc "./${DESIGN}.adc"
+  if { ! [file exists $sdc] } { set sdc "./${DESIGN}.sdc"; }
+  if { [file exists $sdc] } { read_sdc $sdc; }
+
+} elseif { $MODE == "QUARTUS" } {
+  set verilog ${DESIGN}.vo
+  set is_migrated false
+  if { ! [file exists $verilog] } {
+    set verilog "./simulation/modelsim/${DESIGN}.vo"
+    set is_migrated true
+  }
+  if { ! [file exists $verilog] } {
+    error "Can not find design verilog file $verilog"
+  }
+  alta::tcl_highlight "Using design verilog file $verilog.\n"
+  set ret [read_design -top ${TOP_MODULE} -ve $VE_FILE -qsf $ORIGINAL_QSF $verilog -hierachy 1]
+  if { !$ret } { exit -1; }
+
+  set sdc "./${DESIGN}.adc"
+  if { ! [file exists $sdc] } { set sdc "./${DESIGN}.sdc"; }
+  if { ! [file exists $sdc] } {
+    alta::tcl_warn "Can not find design SDC file $sdc"
+  } else {
+    alta::tcl_highlight "Using design SDC file $sdc.\n"
+    read_sdc $sdc
+  }
+
+} elseif { $MODE == "SYNPLICITY" || $MODE == "NATIVE" } {
+  set db_gclk_assignment_level 2
+  set verilog ${DESIGN}.vqm
+  set is_migrated false
+  if { ! [file exists $verilog] } {
+    error "Can not find design verilog file $verilog"
+  }
+
+  set sdc "./${DESIGN}.adc"
+  if { ! [file exists $sdc] } { set sdc "./${DESIGN}.sdc"; }
+  alta::tcl_highlight "Using design verilog file $verilog.\n"
+  if { ! [file exists $sdc] } {
+    alta::tcl_warn "Can not find design SDC file $sdc"
+    set ret [read_design_and_pack -sdc $sdc  -top ${TOP_MODULE} $verilog]
+  } else {
+    alta::tcl_highlight "Using design SDC file $sdc.\n"
+    set ret [read_design_and_pack -top ${TOP_MODULE} $verilog]
+  }
+  if { !$ret } { exit -1; }
+
+} else {
+  error "Unsupported mode $MODE"
+}
+
+if { $FLOW == "PACK" } { break }
+
+if { [info exists FITTING] } {
+  if { $FITTING == "Auto" } { set FITTING auto; }
+  set_mode -fitting $FITTING
+}
+if { [info exists FITTER] } {
+  if { $FITTER == "Auto" } {
+    if { $MODE == "QUARTUS" } { set FITTER hybrid; } else { set FITTER full; }
+  }
+  if { $MODE == "SYNPLICITY" || $MODE == "NATIVE" } { set FITTER full; }
+  set_mode -fitter $FITTER
+}
+if { [info exists EFFORT] } { set_mode -effort $EFFORT; }
+if { [info exists SKEW  ] } { set_mode -skew   $SKEW  ; }
+if { [info exists SKOPE ] } { set_mode -skope  $SKOPE ; }
+if { [info exists HOLDX ] } { set_mode -holdx  $HOLDX; }
+if { [info exists TUNING] } { set_mode -tuning $TUNING; }
+if { [info exists TARGET] } { set_mode -target $TARGET; }
+if { [info exists PRESET] } { set_mode -preset $PRESET; }
+if { [info exists ADJUST] } { set pl_criticality_wadjust $ADJUST; }
+
+set alta_aqf $::alta_work/alta.aqf
+if { $LOAD_DB } {
+  # Empty
+} elseif { false } {
+  if { [file exists $VE_FILE] } {
+    set ORIGINAL_PIN ""
+  } elseif { ! [file exists $ORIGINAL_PIN] } {
+    if { $is_migrated } {
+      error "Can not find design PIN file $ORIGINAL_PIN, please compile design first"
+    }
+    set ORIGINAL_PIN ""
+  }
+  if { [file exists $ORIGINAL_QSF] } {
+    alta::convert_quartus_settings_cmd $ORIGINAL_QSF $ORIGINAL_PIN $alta_aqf
+  } elseif { $is_migrated } {
+    error "Can not find design exported QSF file $ORIGINAL_QSF, please export assigments first"
+  }
+}
+if { [file exists "$alta_aqf"] } {
+  alta::tcl_highlight "Using AQF file $alta_aqf.\n"
+  source "$alta_aqf"
+}
+if { [file exists "./${DESIGN}.asf"] } {
+  alta::tcl_highlight "Using ASF file ${DESIGN}.asf.\n"
+  source "./${DESIGN}.asf"
+}
+
+if { $FLOW == "PROBE" } {
+  set ret [place_pseudo -user_io -place_io -place_pll -place_gclk]
+  if { !$ret } { exit -1 }
+
+  set force ""
+  if { [info exists PROBE_FORCE] && $PROBE_FORCE } { set force "-force" }
+  eval "probe_design -froms {${PROBE_FROMS}} -tos {${PROBE_TOS}} ${force}"
+
+} elseif { $FLOW == "CHECK" } {
+  set ret [place_pseudo -user_io -place_io -place_pll -place_gclk]
+  if { !$ret } { exit -1 }
+
+  if { [file exists "./${DESIGN}.chk"] } {
+    alta::tcl_highlight "Using CHK file ${DESIGN}.chk.\n"
+    source "./${DESIGN}.chk"
+    place_design -dry
+    check_design -rule led_guide
+  } else {
+    error "Can not find design CHECK file ${DESIGN}.chk"
+  }
+
+} else {
+  set ret [place_pseudo -user_io -place_io -place_pll -place_gclk -warn_io]
+  if { !$ret } { exit -1 }
+
+  set org_place ""
+  set load_place ""
+  set load_route ""
+  set quiet ""
+  if {  $ORG_PLACE } { set  org_place "-org_place" ; }
+  if { $LOAD_PLACE } { set load_place "-load_place"; }
+  if { $LOAD_ROUTE } { set load_route "-load_route"; }
+  eval "place_and_route_design $org_place $load_place $load_route \
+                               -retry $RETRY $seed_rand $quiet"
+}
+
+date_time
+if { $FLOW != "CHECK" } {
+if { $FLOW != "PROBE" } {
+#report_timing -verbose 1 -file $::alta_work/timing.rpt.gz
+report_timing -verbose 2 -setup -file $::alta_work/setup.rpt.gz
+report_timing -verbose 2 -setup -brief -file $::alta_work/setup_summary.rpt.gz
+report_timing -verbose 2 -hold -file $::alta_work/hold.rpt.gz
+report_timing -verbose 2 -hold -brief -file $::alta_work/hold_summary.rpt.gz
+
+set ta_report_auto_constraints 0
+report_timing -fmax -file $::alta_work/fmax.rpt
+report_timing -xfer -file $::alta_work/xfer.rpt
+set ta_report_auto_constraints $ta_report_auto
+
+#set ta_coverage_limit "0.95 0.90"
+set ta_dump_uncovered 1
+report_timing -verbose 1 -coverage >! $::alta_work/coverage.rpt.gz
+#unset ta_coverage_limit
+unset ta_dump_uncovered
+
+
+if { ! [info exists rt_report_timing_fast] } {
+  set rt_report_timing_fast false
+}
+if { $rt_report_timing_fast } {
+  set_timing_corner fast
+  route_delay -quiet
+  report_timing -verbose 2 -setup -file $::alta_work/setup_fast.rpt.gz
+  report_timing -verbose 2 -setup -brief -file $::alta_work/setup_fast_summary.rpt.gz
+  report_timing -verbose 2 -hold -file $::alta_work/hold_fast.rpt.gz
+  report_timing -verbose 2 -hold -brief -file $::alta_work/hold_fast_summary.rpt.gz
+  set ta_report_auto_constraints 0
+  report_timing -fmax -file $::alta_work/fmax_fast.rpt
+  report_timing -xfer -file $::alta_work/xfer_fast.rpt
+  set ta_report_auto_constraints $ta_report_auto
+}
+
+write_routed_design "${RESULT_DIR}/${RESULT}_routed.v"
+}
+
+bitgen normal -prg "${RESULT_DIR}/${RESULT}.prg" -bin "${RESULT_DIR}/${RESULT}.bin"
+bitgen sram -prg "${RESULT_DIR}/${RESULT}_sram.prg"
+bitgen download -bin "${RESULT_DIR}/${RESULT}.bin" -svf "${RESULT_DIR}/${RESULT}_download.svf"
+generate_binary -slave "${RESULT_DIR}/${RESULT}_slave.rbf" \
+                -inputs "${RESULT_DIR}/${RESULT}.bin" -reverse
+generate_binary -master "${RESULT_DIR}/${RESULT}_master.bin" \
+                -inputs "${RESULT_DIR}/${RESULT}.bin"
+generate_programming_file "${RESULT_DIR}/${RESULT}_master.bin" -prg "${RESULT_DIR}/${RESULT}_master.prg" \
+  -as "${RESULT_DIR}/${RESULT}_master_as.prg" -hybrid "${RESULT_DIR}/${RESULT}_hybrid.prg"
+}
+break
+}
+Total IO  : 84
+Total Pin : 40/7
+Top array is built.
+Loading architect libraries...
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 33MB (33MB)
+Loading route table...
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 97MB (97MB)
+Using design verilog file ./simulation/modelsim/usb_capture.vo.
+Preparing design...
+Info: Rename duplicated module cell alta_bram to alta_bram_duplicated at ./alta_db/flatten.vx:1.
+## CPU time: 0:0:0, REAL time: 0:0:1
+## Memory Usage: 99MB (99MB)
+Pseudo pack design...
+Packing Statistics
+ Total      Logics : 289/1280 ( 22%)
+ Total        LUTs : 287/1280 ( 22%)
+ Total   Registers : 151/1280 ( 11%)
+ Total  Block Rams :   1/  15 (  6%)
+ Total  Slice Rams :   0/ 160 (  0%)
+ Total        PLLs :   0/   1 (  0%)
+ Total        Pins :  27/  40 ( 67%)
+ Global    Signals :   3/   8 ( 37%)
+      HSPI_CLK~inputclkctrl_outclk (from:   HSPI_CLK~input_o)
+       SPI_SCK~inputclkctrl_outclk (from:    SPI_SCK~input_o)
+           hspi|ack~clkctrl_outclk (from:         hspi|ack~q)
+ Total Lonely   Datain   : 0
+ Total Lonely   Register : 2
+ Total LUT-FF   Pairs    : 134
+ Total Register Packings : 15
+ Registers with synchronous    reset : 8
+ Registers with asynchronous   reset : 48
+ Registers with sync and async reset : 8
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 100MB (100MB)
+Filter verilog...
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 100MB (100MB)
+Read DB design...
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 122MB (122MB)
+Process design...
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[4]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[2]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[3]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_HTVLD~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[5]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[7]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[1]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[5]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[7]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_STP~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[0]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_D[6]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[1]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[0]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to HSPI_HTREQ~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_RST~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[2]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to SPI_MISO~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[4]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[3]~output false
+> set_instance_assignment -name ENABLE_OPEN_DRAIN -to ULPI_D[6]~output false
+Info: Found GCLK net hspi|ack~clkctrl_outclk (1).
+Info: Found GCLK net SPI_SCK~inputclkctrl_outclk (9).
+Info: Found GCLK net HSPI_CLK~inputclkctrl_outclk (20).
+Info: Slice ~VCC is removed.
+Info: Applying IP info dual_ram_0_E81264E7 to slice ram|dual_ram_0_E81264E7|ram_inst.
+## CPU time: 0:0:0, REAL time: 0:0:0
+## Memory Usage: 123MB (123MB)
+Using design SDC file ./usb_capture.sdc.
+derive_pll_clocks -create_base_clocks
+>  set pl_criticality_wratio  "5.00 5.00 5.00 1.00"
+> #set pl_max_iter_eco        "10 20 300 40 3  100 100 1"
+> ##et pl_eco_slack_crit      "99999. 1.00  0.10 8 0.03 35 0.01 170"
+> 
+> ##et pl_priority_compare  "2 2 2 3"
+> #set pl_priority_result   "2 1 1 0"
+> #set pl_priority_pass     "2 1 1 0"
+> #set pl_swap_cost_margin       "200.0  0.0  200.0  0.0  200.0  0.0   0.00  0.0"
+>  set pl_swap_wirelength_margin "200.0  0.0  200.0  0.0  200.0  0.0   020.0 -0.3  2000. 1.50"
+>  set pl_swap_congestion_margin "100.0  0.0  100.0  0.0  100.0  0.0   010.0 -0.3  1000. 1.25"
+> #set pl_criticality_beta "1.0 3.0 1.0  1.0 3.0 1.0  1.0 3.0 1.0  99999 3.0 3.0"
+> 
+>  set rt_retiming_idx         5
+>  set rt_converge_accelerator "3 1 0 0"
+> #set rt_pres_cost_ratio      "1.00 1.50  2.00 2.50"
+>  set rt_dly_ratio            "0.55 0.35 0.30  0.50 0.50 0.30"
+>  set rt_reroute_max_iter     "6  4 5  7 9  12"
+>  set rt_reroute_start_iter   "0  0 1  2 4  0 "
+>  set rt_quick_converge_ratio 0.00
+>  set pl_reuse_existing_placement true
+>  set pl_fix_bram_cells 0
+>  set pl_fix_mult_cells 0
+> #set pl_neighbor_swap_range "2  6  6  3 "
+>  set pl_pass_result "1 1 1 1"
+>  set pl_max_pass    "2 1 1 1 1"
+>  set pl_max_iter       10
+>  set pl_max_iter_part  20
+>  set pl_max_iter_final 20
+>  set pl_max_iter_legal 10
+>  set pl_max_iter_touch 00
+> #set pl_neighbor_swap_range "2  6  6  3 "
+> #set pl_spread_swap_max_iter "3 5  5 4"
+> #set pl_use_initial_place_once 0
+>  set rt_min_converge "7"
+>  set rt_optimize_max "3"
+>  set pl_useful_skew_level -1
+>  set rt_useful_skew_level 0
+>  set rt_useful_skew_bram         true
+>  set rt_useful_skew_io           false
+>  set rt_useful_skew_io_ireg      false
+>  set rt_useful_skew_io_oreg      false
+>  set rt_useful_skew_output_io    false
+>  set rt_useful_skew_input_io     false
+>  set rt_useful_skew_unconstraint "false false"
+>  set rt_useful_skew_max                "0 100"
+>  set rt_skew_crit_minmax               "0.00 1.00"
+> #set rt_useful_skew_setup_slac_margin  "1.00 1.00  1.00 1.00  1.00 0.10 0.50 0.10 0.70 0.10  1.00"
+> #set rt_useful_skew_hold_slack_margin  "0.10 0.10  0.30 0.30  0.30 0.30"
+> #set rt_useful_skew_hold_slack_ratio   "0.05 0.05  0.10 0.10  0.10 0.10"
+> # Minimal logical slice hold fix, only by routing to bram/mult, no IO delay
+> 
+>  set ta_cross_clock_slack "2 0"
+> 
+> #set pl_max_iter_hold_fix "30 1 3"
+> #set pl_hold_slack_margin  0.2
+> #set pl_setup_slack_margin "0.5 -1000."
+> #set pl_net_hold_fix_target "alta_bram alta_bram9k alta_mult"
+> 
+>  set rt_hold_slack_margin  "0.2 0.2    0.2 0.2    0.2 0.7   -1000. 0.0"
+>  set rt_setup_slack_margin "0.5 -1000. 0.5 -1000. 0.0 -1000."
+> #set rt_net_hold_crit_minmax "0.5 0.5"
+>  set rt_net_hold_budget_method 0
+>  set rt_net_hold_fix_target "alta_bram alta_bram9k alta_mult"
+> 
+> #set pl_net_hold_fix_clock false
+> #set pl_net_hold_fix_auto  false
+> #set pl_net_hold_fix_io    false
+> #set rt_net_hold_fix_start false
+> #set rt_net_hold_fix_clock false
+> #set rt_net_hold_fix_auto  false
+> #set rt_net_hold_fix_io    false
+Using ASF file usb_capture.asf.
+> set_location_assignment PIN_13 -to ULPI_CLK
+> set_location_assignment PIN_11 -to ULPI_D[0]
+> set_location_assignment PIN_9  -to ULPI_D[1]
+> set_location_assignment PIN_6  -to ULPI_D[2]
+> set_location_assignment PIN_5  -to ULPI_D[3]
+> set_location_assignment PIN_4  -to ULPI_D[4]
+> set_location_assignment PIN_3  -to ULPI_D[5]
+> set_location_assignment PIN_2  -to ULPI_D[6]
+> set_location_assignment PIN_1  -to ULPI_D[7]
+> set_location_assignment PIN_14 -to ULPI_DIR
+> set_location_assignment PIN_12 -to ULPI_NXT
+> set_location_assignment PIN_15 -to ULPI_STP
+> set_location_assignment PIN_16 -to ULPI_RST
+> 
+> set_location_assignment PIN_44 -to HSPI_CLK
+> set_location_assignment PIN_43 -to HSPI_HTREQ
+> set_location_assignment PIN_45 -to HSPI_HTRDY
+> set_location_assignment PIN_42 -to HSPI_HTVLD
+> set_location_assignment PIN_41 -to HSPI_D[0]
+> set_location_assignment PIN_25 -to HSPI_D[1]
+> set_location_assignment PIN_46 -to HSPI_D[2]
+> set_location_assignment PIN_23 -to HSPI_D[3]
+> set_location_assignment PIN_22 -to HSPI_D[4]
+> set_location_assignment PIN_20 -to HSPI_D[5]
+> set_location_assignment PIN_19 -to HSPI_D[6]
+> set_location_assignment PIN_18 -to HSPI_D[7]
+> 
+> set_location_assignment PIN_48 -to SPI_SCK
+> set_location_assignment PIN_17 -to SPI_MISO
+> 
+> set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED"
+> 
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_HTREQ
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_HTVLD
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[0]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[1]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[2]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[3]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[4]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[5]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[6]
+> set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to HSPI_D[7]
+Info: Applying IP info dual_ram_0_E81264E7 to slice ram|dual_ram_0_E81264E7|ram_inst.
+Warn: Auto constraint INTERNAL: create_clock -name Internal_generated_clock_usb_capture|HSPI_CLK -period 1000.000 HSPI_CLK.
+Warn: Auto constraint INTERNAL: create_clock -name Internal_generated_clock_usb_capture|SPI_SCK -period 1000.000 SPI_SCK.
+Warn: Auto constraint INTERNAL: create_generated_clock -name Internal_generated_clock_hspi|ack|Q -divide_by 2 -add -source HSPI_CLK -master_clock Internal_generated_clock_usb_capture|HSPI_CLK hspi|ack|Q.
+Placement Statistics
+ Total  Logic    Counts  : 288/1280 (22.5%)
+ Total  Logic    Tiles   : 21/80 (26.2%)
+ Total  Other    Tiles   : 1/15 (6.7%)
+ Total  Valid    Nets    : 377 (215+162)
+ Total  Valid    Fanouts : 1527 (814+713)
+ Total  Tile     Fanouts : 346
+ Tile   Zip      Fanins  : 11 (0:19)
+ Tile   Zip      Fanouts : 19 (0:66)
+ Total  Ignored  Nets    : 256
+ Total  Valid    Blocks  : 29 (21/8)
+ Total  Ignored  Blocks  : 4
+ Total  Zip Complexities : 71/434 2.11/149.68
+ Avg    Zip   Bottleneck : 3.57 18.33
+ Avg    Net   Bottleneck : 16.29 388.57
+Iter #1/1 ...
+Pass 1 #1/2 ...
+Partitioning...
+ step = 3, partition : 2,2
+....................
+ step = 4, partition : 2,2
+....................
+
+## CPU time: 0:0:0, REAL time: 0:0:0
+Pass 1 #2/2 ...
+Partitioning...
+ step = 3, partition : 2,2
+....................
+ step = 4, partition : 2,2
+....................
+
+## CPU time: 0:0:0, REAL time: 0:0:1
+Pass 2 #1/1 ...
+Legalization and Swapping...
+..........
+
+## CPU time: 0:0:0, REAL time: 0:0:0
+Pass 3 #1/1 ...
+Touchup...
+
+
+## CPU time: 0:0:0, REAL time: 0:0:0
+Pass 4 #1/1 ...
+Optimization...
+............................................................
+Finishing...
+
+## CPU time: 0:0:0, REAL time: 0:0:0
+Total wire cost after placement: 0:0:0(0:0) 554.708(148.58)+819(0)+182.889 297.295(43.1531)+-341
+
+*** Post Placement Timing Report ***
+=== User constraints ===
+
+
+=== Auto constraints ===
+Fmax report
+  User constraint:   0.500MHz, Fmax: 321.129MHz, Clock: Internal_generated_clock_hspi|ack|Q
+  User constraint:   1.000MHz, Fmax: 127.228MHz, Clock: Internal_generated_clock_usb_capture|HSPI_CLK
+  User constraint:   1.000MHz, Fmax: 187.511MHz, Clock: Internal_generated_clock_usb_capture|SPI_SCK
+
+Clock transfer report:
+  Worst setup: 1996.886, with clock Internal_generated_clock_hspi|ack|Q
+  Worst setup: 992.140, with clock Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst setup: 994.667, with clock Internal_generated_clock_usb_capture|SPI_SCK
+  Worst setup: 990.917, from clock Internal_generated_clock_hspi|ack|Q to Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst setup: 998.923, from clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK
+
+  Worst  hold:   1.078, with clock Internal_generated_clock_hspi|ack|Q
+  Worst  hold:   0.900, with clock Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst  hold:   0.884, with clock Internal_generated_clock_usb_capture|SPI_SCK
+  Worst  hold:   1.052, from clock Internal_generated_clock_hspi|ack|Q to Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst  hold:  -0.423, from clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK
+
+Coverage report
+  User constraints covered 0 connections out of 1119 total, coverage: 0.0%
+  Auto constraints covered 1094 connections out of 1119 total, coverage: 97.8%
+
+
+Hold from rst to hspi|reg_rdata_value[0], clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK, constraint 0.000, skew 1.472, data 1.127
+  Slack:  -0.423
+    Arrival Time:  503.835
+    Required Time: 504.258
+
+*** End Timing Report ***
+
+route_design -dump ./alta_db/route.tx -replace ./alta_db/replace.tx 
+Route Design Statistics
+ Total Routing Nets : 378
+ Fanout     Average : 3.11 (1..24)
+ Max   Fanout  Net  : hspi|LessThan0~9_combout
+ Logic       Slices : 288/1280 (22.5%)
+
+Routing...
+ Budget Useful Skew...
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 1/1, route#: 378, violation# : 81, overflow# : 80, conflict# : 98, node#: 2029
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 2/2, route#: 378, violation# : 51, overflow# : 50, conflict# : 73, node#: 2080
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 3/3, route#: 378, violation# : 16, overflow# : 16, conflict# : 17, node#: 2128
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 4/4, route#: 378, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 5/2, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 6/1, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 7/2, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 8/2, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 9/2, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+## CPU time: 0:0:0, REAL time: 0:0:0
+ iter = 10/2, route#: 6, violation# : 0, overflow# : 0, conflict# : 0, node#: 2145
+Optimizing...
+...
+
+Done
+
+*** Post Routing Timing Report ***
+=== User constraints ===
+
+
+=== Auto constraints ===
+Fmax report
+  User constraint:   0.500MHz, Fmax: 276.467MHz, Clock: Internal_generated_clock_hspi|ack|Q
+  User constraint:   1.000MHz, Fmax:  92.327MHz, Clock: Internal_generated_clock_usb_capture|HSPI_CLK
+  User constraint:   1.000MHz, Fmax: 109.517MHz, Clock: Internal_generated_clock_usb_capture|SPI_SCK
+
+Clock transfer report:
+  Worst setup: 1996.383, with clock Internal_generated_clock_hspi|ack|Q
+  Worst setup: 989.169, with clock Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst setup: 990.869, with clock Internal_generated_clock_usb_capture|SPI_SCK
+  Worst setup: 986.011, from clock Internal_generated_clock_hspi|ack|Q to Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst setup: 998.669, from clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK
+
+  Worst  hold:   1.246, with clock Internal_generated_clock_hspi|ack|Q
+  Worst  hold:   1.036, with clock Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst  hold:   1.020, with clock Internal_generated_clock_usb_capture|SPI_SCK
+  Worst  hold:   1.052, from clock Internal_generated_clock_hspi|ack|Q to Internal_generated_clock_usb_capture|HSPI_CLK
+  Worst  hold:  -0.558, from clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK
+
+Coverage report
+  User constraints covered 0 connections out of 1119 total, coverage: 0.0%
+  Auto constraints covered 1094 connections out of 1119 total, coverage: 97.8%
+
+
+Hold from rst to hspi|reg_rdata_value[0], clock Internal_generated_clock_usb_capture|HSPI_CLK to Internal_generated_clock_usb_capture|SPI_SCK, constraint 0.000, skew 1.972, data 1.483
+  Slack:  -0.558
+    Arrival Time:  505.518
+    Required Time: 506.076
+
+*** End Timing Report ***
+
+Mon Oct 09 23:21:45 2023
+Warn: User constraints coverage is too low at 0.0%.
+> 
+> if { [file exists "./${DESIGN}.post.asf"] } {
+  alta::tcl_highlight "Using post-ASF file ${DESIGN}.post.asf.\n"
+  source "./${DESIGN}.post.asf"
+}
+Using post-ASF file usb_capture.post.asf.
+> date_time
+Mon Oct 09 23:21:46 2023
+> exit
+
+Total 0 fatals, 0 errors, 4 warnings, 7 infos.

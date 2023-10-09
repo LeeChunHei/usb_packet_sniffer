@@ -1,0 +1,156 @@
+# Reading C:/intelFPGA/18.0/modelsim_ase/tcl/vsim/pref.tcl
+# do usb_capture_run_msim_rtl_verilog.do
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work rtl_work 
+# Copying C:/intelFPGA/18.0/modelsim_ase/win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# 
+# vlog -vlog01compat -work work +incdir+D:/Projects/ss_usb_analyzer {D:/Projects/ss_usb_analyzer/usb_capture.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:12:39 on Sep 07,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/Projects/ss_usb_analyzer" D:/Projects/ss_usb_analyzer/usb_capture.v 
+# -- Compiling module usb_capture
+# 
+# Top level modules:
+# 	usb_capture
+# End time: 22:12:39 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+D:/Projects/ss_usb_analyzer {D:/Projects/ss_usb_analyzer/dual_ram.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:12:39 on Sep 07,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/Projects/ss_usb_analyzer" D:/Projects/ss_usb_analyzer/dual_ram.v 
+# -- Compiling module dual_ram
+# -- Compiling module dual_ramA_Decoder0to1
+# -- Compiling module dual_ramB_Mux16to16
+# -- Compiling module readAndBand2
+# -- Compiling module dual_ramB_Decoder0to1
+# -- Compiling module dual_ramB_Register0
+# 
+# Top level modules:
+# 	dual_ram
+# End time: 22:12:39 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+D:/Download/Supra/etc/arch/rodinia {D:/Download/Supra/etc/arch/rodinia/alta_sim.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:12:39 on Sep 07,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/Download/Supra/etc/arch/rodinia" D:/Download/Supra/etc/arch/rodinia/alta_sim.v 
+# -- Compiling module alta_slice
+# -- Compiling module alta_clkenctrl_rst
+# -- Compiling module alta_clkenctrl
+# -- Compiling module alta_asyncctrl
+# -- Compiling module alta_syncctrl
+# -- Compiling module alta_io_gclk
+# -- Compiling module alta_gclksel
+# -- Compiling module alta_gclkgen
+# -- Compiling module alta_gclkgen0
+# -- Compiling module alta_gclkgen2
+# -- Compiling module alta_io
+# -- Compiling module alta_rio
+# -- Compiling module alta_srff
+# -- Compiling module alta_dff
+# -- Compiling module alta_ufm_gddd
+# -- Compiling module alta_dff_stall
+# -- Compiling module alta_srlat
+# -- Compiling module alta_dio
+# -- Compiling module alta_ufms
+# -- Compiling module alta_ufms_sim
+# -- Compiling module alta_pll
+# -- Compiling module alta_pllx
+# -- Compiling module pll_clk_div
+# -- Compiling module alta_pll_core
+# -- Compiling module alta_pll_sim
+# -- Compiling module pll_clk_div_hl
+# -- Compiling module alta_pll_sim_v
+# -- Compiling module pll_clk_div_hl_ve
+# -- Compiling module alta_pll_sim_ve
+# -- Compiling module pll_clk_trim
+# -- Compiling module alta_pllv
+# -- Compiling module alta_pllve
+# -- Compiling module alta_sram
+# -- Compiling module alta_dpram16x4
+# -- Compiling module alta_spram16x4
+# -- Compiling module alta_wram
+# -- Compiling module alta_bram_pulse_generator
+# -- Compiling module alta_bram
+# -- Compiling module alta_ram4k
+# -- Compiling module alta_boot
+# -- Compiling module alta_osc
+# -- Compiling module alta_ufml
+# -- Compiling module alta_jtag
+# -- Compiling module alta_mult_int
+# -- Compiling module alta_mult
+# -- Compiling module alta_dff_en
+# -- Compiling module alta_multm_add
+# -- Compiling module alta_multm
+# -- Compiling module alta_i2c
+# -- Compiling module alta_spi
+# -- Compiling module alta_irda
+# -- Compiling module alta_bram9k
+# -- Compiling module alta_ram9k
+# -- Compiling module alta_mcu
+# -- Compiling module alta_mcu_m3
+# -- Compiling module alta_remote
+# -- Compiling module alta_saradc
+# -- Compiling module alta_gclksw
+# -- Compiling module alta_rv32
+# -- Compiling module alta_adc
+# -- Compiling module alta_dac
+# -- Compiling module alta_cmp
+# 
+# Top level modules:
+# 	alta_slice
+# 	alta_asyncctrl
+# 	alta_syncctrl
+# 	alta_io_gclk
+# 	alta_gclksel
+# 	alta_gclkgen0
+# 	alta_gclkgen2
+# 	alta_rio
+# 	alta_ufm_gddd
+# 	alta_dio
+# 	alta_ufms
+# 	alta_pll
+# 	alta_pllx
+# 	alta_pllv
+# 	alta_pllve
+# 	alta_dpram16x4
+# 	alta_spram16x4
+# 	alta_wram
+# 	alta_ram4k
+# 	alta_boot
+# 	alta_osc
+# 	alta_ufml
+# 	alta_jtag
+# 	alta_mult
+# 	alta_multm
+# 	alta_i2c
+# 	alta_spi
+# 	alta_irda
+# 	alta_ram9k
+# 	alta_mcu
+# 	alta_mcu_m3
+# 	alta_remote
+# 	alta_saradc
+# 	alta_gclksw
+# 	alta_rv32
+# 	alta_adc
+# 	alta_dac
+# 	alta_cmp
+# End time: 22:12:39 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vlog -vlog01compat -work work +incdir+D:/Projects/ss_usb_analyzer {D:/Projects/ss_usb_analyzer/spi_register_bus.v}
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 22:12:40 on Sep 07,2023
+# vlog -reportprogress 300 -vlog01compat -work work "+incdir+D:/Projects/ss_usb_analyzer" D:/Projects/ss_usb_analyzer/spi_register_bus.v 
+# -- Compiling module spi_register_bus
+# 
+# Top level modules:
+# 	spi_register_bus
+# End time: 22:12:40 on Sep 07,2023, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# 

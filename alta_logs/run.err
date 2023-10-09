@@ -1,0 +1,13 @@
+Info: Rename duplicated module cell alta_bram to alta_bram_duplicated at ./alta_db/flatten.vx:1.
+Info: Found GCLK net hspi|ack~clkctrl_outclk (1).
+Info: Found GCLK net SPI_SCK~inputclkctrl_outclk (9).
+Info: Found GCLK net HSPI_CLK~inputclkctrl_outclk (20).
+Info: Slice ~VCC is removed.
+Info: Applying IP info dual_ram_0_E81264E7 to slice ram|dual_ram_0_E81264E7|ram_inst.
+Info: Applying IP info dual_ram_0_E81264E7 to slice ram|dual_ram_0_E81264E7|ram_inst.
+Warn: Auto constraint INTERNAL: create_clock -name Internal_generated_clock_usb_capture|HSPI_CLK -period 1000.000 HSPI_CLK.
+Warn: Auto constraint INTERNAL: create_clock -name Internal_generated_clock_usb_capture|SPI_SCK -period 1000.000 SPI_SCK.
+Warn: Auto constraint INTERNAL: create_generated_clock -name Internal_generated_clock_hspi|ack|Q -divide_by 2 -add -source HSPI_CLK -master_clock Internal_generated_clock_usb_capture|HSPI_CLK hspi|ack|Q.
+Warn: User constraints coverage is too low at 0.0%.
+
+Total 0 fatals, 0 errors, 4 warnings, 7 infos.

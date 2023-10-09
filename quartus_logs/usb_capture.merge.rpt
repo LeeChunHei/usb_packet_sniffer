@@ -1,0 +1,446 @@
+Partition Merge report for usb_capture
+Mon Oct 09 23:11:31 2023
+Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Standard Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Partition Merge Summary
+  3. Partition Merge Netlist Types Used
+  4. Partition Merge Partition Warnings
+  5. Partition Merge Partition Statistics
+  6. Partition Merge Partition Pin Processing
+  7. Partition Merge Resource Usage Summary
+  8. Partition Merge Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+
+
+
++--------------------------------------------------------------------------------------+
+; Partition Merge Summary                                                              ;
++------------------------------------+-------------------------------------------------+
+; Partition Merge Status             ; Successful - Mon Oct 09 23:11:31 2023           ;
+; Quartus Prime Version              ; 18.0.0 Build 614 04/24/2018 SJ Standard Edition ;
+; Revision Name                      ; usb_capture                                     ;
+; Top-level Entity Name              ; usb_capture                                     ;
+; Family                             ; Cyclone IV E                                    ;
+; Total logic elements               ; 295                                             ;
+;     Total combinational functions  ; 277                                             ;
+;     Dedicated logic registers      ; 151                                             ;
+; Total registers                    ; 151                                             ;
+; Total pins                         ; 27                                              ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0                                               ;
+; Embedded Multiplier 9-bit elements ; 0                                               ;
+; Total PLLs                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Partition Merge Netlist Types Used                                                                                                                            ;
++--------------------------------+----------------+-------------------+------------------------+----------------------------------------------------------------+
+; Partition Name                 ; Partition Type ; Netlist Type Used ; Netlist Type Requested ; Partition Contents                                             ;
++--------------------------------+----------------+-------------------+------------------------+----------------------------------------------------------------+
+; Top                            ; User-created   ; Source File       ; Source File            ;                                                                ;
+; alta_bram:ram_inst             ; User-created   ; Post-Synthesis    ; Post-Synthesis         ; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst ;
+; hard_block:auto_generated_inst ; Auto-generated ; Source File       ; Source File            ; hard_block:auto_generated_inst                                 ;
++--------------------------------+----------------+-------------------+------------------------+----------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Warnings                                                                           ;
++-----------------------------------------------------------------------------+--------------------+-----------+
+; Port                                                                        ; Partition          ; Info      ;
++-----------------------------------------------------------------------------+--------------------+-----------+
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[0]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[1]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[2]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[3]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[4]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[5]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[6]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[7]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[8]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[9]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[10]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[11]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[12]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[13]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[14]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[15]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[16]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[17]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[0]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[1]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[2]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[3]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[4]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[5]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[6]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[7]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[8]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[9]   ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[10]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[11]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[12]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[13]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[14]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[15]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[16]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInB[17]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[0]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[1]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[2]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[3]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[4]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[5]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[6]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[7]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[8]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[9]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[10] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[11] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[0]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[1]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[2]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[3]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[4]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[5]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[6]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[7]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[8]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[9]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[10] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[11] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[0]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[1]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[2]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[3]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[4]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[5]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[6]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[7]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[8]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[9]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[10] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[11] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[12] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[13] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[14] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[15] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[16] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutA[17] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[0]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[1]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[2]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[3]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[4]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[5]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[6]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[7]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[8]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[9]  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[10] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[11] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[12] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[13] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[14] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[15] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[16] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataOutB[17] ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|Clk0         ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|ClkEn0       ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AsyncReset0  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|Clk1         ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|ClkEn1       ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AsyncReset1  ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|WeRenA       ; alta_bram:ram_inst ; No fanout ;
+; dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|WeRenB       ; alta_bram:ram_inst ; No fanout ;
++-----------------------------------------------------------------------------+--------------------+-----------+
+Note: The Incremental Compilation Advisor can be used to get more detailed recommendations.
+
+
++----------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Statistics                                                                     ;
++---------------------------------------------+------+--------------------+--------------------------------+
+; Statistic                                   ; Top  ; alta_bram:ram_inst ; hard_block:auto_generated_inst ;
++---------------------------------------------+------+--------------------+--------------------------------+
+; Estimated Total logic elements              ; 294  ; 1                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Total combinational functions               ; 276  ; 1                  ; 0                              ;
+; Logic element usage by number of LUT inputs ;      ;                    ;                                ;
+;     -- 4 input functions                    ; 93   ; 0                  ; 0                              ;
+;     -- 3 input functions                    ; 62   ; 0                  ; 0                              ;
+;     -- <=2 input functions                  ; 121  ; 1                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Logic elements by mode                      ;      ;                    ;                                ;
+;     -- normal mode                          ; 204  ; 1                  ; 0                              ;
+;     -- arithmetic mode                      ; 72   ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Total registers                             ; 151  ; 0                  ; 0                              ;
+;     -- Dedicated logic registers            ; 151  ; 0                  ; 0                              ;
+;     -- I/O registers                        ; 0    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Virtual pins                                ; 0    ; 0                  ; 0                              ;
+; I/O pins                                    ; 27   ; 0                  ; 0                              ;
+; Embedded Multiplier 9-bit elements          ; 0    ; 0                  ; 0                              ;
+; Total memory bits                           ; 0    ; 0                  ; 0                              ;
+; Total RAM block bits                        ; 0    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Connections                                 ;      ;                    ;                                ;
+;     -- Input Connections                    ; 9    ; 0                  ; 0                              ;
+;     -- Registered Input Connections         ; 0    ; 0                  ; 0                              ;
+;     -- Output Connections                   ; 9    ; 0                  ; 0                              ;
+;     -- Registered Output Connections        ; 0    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Internal Connections                        ;      ;                    ;                                ;
+;     -- Total Connections                    ; 1311 ; 0                  ; 0                              ;
+;     -- Registered Connections               ; 577  ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; External Connections                        ;      ;                    ;                                ;
+;     -- Top                                  ; 18   ; 0                  ; 0                              ;
+;     -- alta_bram:ram_inst                   ; 0    ; 0                  ; 0                              ;
+;     -- hard_block:auto_generated_inst       ; 0    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Partition Interface                         ;      ;                    ;                                ;
+;     -- Input Ports                          ; 6    ; 68                 ; 0                              ;
+;     -- Output Ports                         ; 12   ; 36                 ; 0                              ;
+;     -- Bidir Ports                          ; 9    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Registered Ports                            ;      ;                    ;                                ;
+;     -- Registered Input Ports               ; 0    ; 0                  ; 0                              ;
+;     -- Registered Output Ports              ; 0    ; 0                  ; 0                              ;
+;                                             ;      ;                    ;                                ;
+; Port Connectivity                           ;      ;                    ;                                ;
+;     -- Input Ports driven by GND            ; 0    ; 26                 ; 0                              ;
+;     -- Output Ports driven by GND           ; 0    ; 36                 ; 0                              ;
+;     -- Input Ports driven by VCC            ; 0    ; 40                 ; 0                              ;
+;     -- Output Ports driven by VCC           ; 0    ; 0                  ; 0                              ;
+;     -- Input Ports with no Source           ; 0    ; 0                  ; 0                              ;
+;     -- Output Ports with no Source          ; 0    ; 0                  ; 0                              ;
+;     -- Input Ports with no Fanout           ; 0    ; 68                 ; 0                              ;
+;     -- Output Ports with no Fanout          ; 0    ; 36                 ; 0                              ;
++---------------------------------------------+------+--------------------+--------------------------------+
+Note: Resource usage numbers presented for Partitions containing post-synthesis logic are estimates.  For Partitions containing post-fit logic, resource usage numbers are accurate based on previous placement information.  Actual Fitter results may vary depending on current Fitter Preservation Level assignments.
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Partition Merge Partition Pin Processing                                                                     ;
++--------------------------+-----------+---------------+----------+--------------------------------------------+
+; Name                     ; Partition ; Type          ; Location ; Status                                     ;
++--------------------------+-----------+---------------+----------+--------------------------------------------+
+; HSPI_CLK                 ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- HSPI_CLK          ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- HSPI_CLK~input    ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[0]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[0]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[0]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[1]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[1]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[1]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[2]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[2]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[2]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[3]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[3]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[3]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[4]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[4]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[4]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[5]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[5]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[5]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[6]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[6]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[6]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_D[7]                ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_D[7]         ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_D[7]~output  ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_HTRDY               ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- HSPI_HTRDY        ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- HSPI_HTRDY~input  ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_HTREQ               ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_HTREQ        ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_HTREQ~output ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; HSPI_HTVLD               ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- HSPI_HTVLD        ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- HSPI_HTVLD~output ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; SPI_MISO                 ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- SPI_MISO          ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- SPI_MISO~output   ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; SPI_SCK                  ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- SPI_SCK           ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- SPI_SCK~input     ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_CLK                 ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- ULPI_CLK          ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_CLK~input    ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_DIR                 ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- ULPI_DIR          ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_DIR~input    ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[0]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[0]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[0]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[1]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[1]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[1]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[2]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[2]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[2]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[3]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[3]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[3]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[4]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[4]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[4]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[5]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[5]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[5]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[6]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[6]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[6]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_D[7]                ; Top       ; Bidir Port    ; n/a      ;                                            ;
+;     -- ULPI_D[7]         ; Top       ; Bidir Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_D[7]~output  ; Top       ; Output Buffer ; Unplaced ; Preserved from Synthesis Netlist (WYSIWYG) ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_NXT                 ; Top       ; Input Port    ; n/a      ;                                            ;
+;     -- ULPI_NXT          ; Top       ; Input Pad     ; Unplaced ; Synthesized                                ;
+;     -- ULPI_NXT~input    ; Top       ; Input Buffer  ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_RST                 ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- ULPI_RST          ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- ULPI_RST~output   ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
+; ULPI_STP                 ; Top       ; Output Port   ; n/a      ;                                            ;
+;     -- ULPI_STP          ; Top       ; Output Pad    ; Unplaced ; Synthesized                                ;
+;     -- ULPI_STP~output   ; Top       ; Output Buffer ; Unplaced ; Synthesized                                ;
+;                          ;           ;               ;          ;                                            ;
++--------------------------+-----------+---------------+----------+--------------------------------------------+
+
+
++--------------------------------------------------------------+
+; Partition Merge Resource Usage Summary                       ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 295            ;
+;                                             ;                ;
+; Total combinational functions               ; 277            ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 93             ;
+;     -- 3 input functions                    ; 62             ;
+;     -- <=2 input functions                  ; 122            ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 205            ;
+;     -- arithmetic mode                      ; 72             ;
+;                                             ;                ;
+; Total registers                             ; 151            ;
+;     -- Dedicated logic registers            ; 151            ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 27             ;
+;                                             ;                ;
+; Embedded Multiplier 9-bit elements          ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; HSPI_CLK~input ;
+; Maximum fan-out                             ; 103            ;
+; Total fan-out                               ; 1311           ;
+; Average fan-out                             ; 2.67           ;
++---------------------------------------------+----------------+
+
+
++--------------------------+
+; Partition Merge Messages ;
++--------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Partition Merge
+    Info: Version 18.0.0 Build 614 04/24/2018 SJ Standard Edition
+    Info: Processing started: Mon Oct 09 23:11:31 2023
+Info: Command: quartus_cdb --read_settings_files=off --write_settings_files=off usb_capture -c usb_capture --merge=on
+Info (35007): Using synthesis netlist for partition "Top"
+Info (35007): Using synthesis netlist for partition "alta_bram:ram_inst" File: D:/Download/Supra/etc/arch/rodinia/alta_sim.v Line: 2655
+Info (35002): Resolved and merged 2 partition(s)
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (35047): Found 104 ports with no fan-out. For more information, refer to the Partition Merger report
+Warning (35016): Found partition port(s) not driving logic, possibly wasting area
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AsyncReset1", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AsyncReset0", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[11]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[10]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[9]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[8]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[7]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[6]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[5]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressB[4]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[11]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[10]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[9]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[8]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[7]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[6]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[5]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|AddressA[4]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[7]", driven by node "~GND", does not drive logic
+    Warning (35018): Partition port "dual_ram:ram|alta_ram4k:dual_ram_0_E81264E7|alta_bram:ram_inst|DataInA[6]", driven by node "~GND", does not drive logic
+    Warning (35039): Only the first 20 ports are reported. For a full list of ports, refer to the Partition Warnings panel in the Partition Merge report
+Warning (21074): Design contains 3 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "ULPI_CLK" File: D:/Projects/ss_usb_analyzer/usb_capture.v Line: 2
+    Warning (15610): No output dependent on input pin "ULPI_DIR" File: D:/Projects/ss_usb_analyzer/usb_capture.v Line: 4
+    Warning (15610): No output dependent on input pin "ULPI_NXT" File: D:/Projects/ss_usb_analyzer/usb_capture.v Line: 5
+Info (21057): Implemented 325 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 6 input pins
+    Info (21059): Implemented 12 output pins
+    Info (21060): Implemented 9 bidirectional pins
+    Info (21061): Implemented 298 logic cells
+Info: Quartus Prime Partition Merge was successful. 0 errors, 26 warnings
+    Info: Peak virtual memory: 4697 megabytes
+    Info: Processing ended: Mon Oct 09 23:11:31 2023
+    Info: Elapsed time: 00:00:00
+    Info: Total CPU time (on all processors): 00:00:00
+
+
